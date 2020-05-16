@@ -6,6 +6,22 @@ $(() => {
       $('header #api_status').addClass('available');
     }
   });
+  $.ajax({
+    url: 'http://localhost:5001/api/v1/places_search/',
+    contentType:'application/json',
+    data: '{}',
+    type: 'POST',
+    success: (response) => {
+      response.forEach(item => {
+        $('article .title_box h2').html(item.name);
+	$('article .price_by_night').html(item.price_by_night);
+	$('article .information .max_guest').html(item.max_guest + " Guests");
+	$('article .information .number_rooms').html(item.number_rooms + " Bedrooms");
+	$('article .information .number_bathrooms').html(item.number_bathrooms + " Bathrooms");
+	$('article .description').html(item.description);
+      });
+    }
+  });
   const dirAmeny = {};
   $('li input:checkbox').css({ 'margin-right': '10px' });
   $('li input:checkbox').change(function () {
