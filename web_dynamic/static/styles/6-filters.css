@@ -41,6 +41,7 @@ button:hover {
     font-weight: 400;
     font-size: 14px;
 }
+
 .locations {
     height: 100%;
     width: 25%;
@@ -49,6 +50,14 @@ button:hover {
 .amenities {
     height: 100%;
     width: 25%;
+}
+
+.amenities h4 p {
+    width: 215px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0px;
 }
 
 .popover {
