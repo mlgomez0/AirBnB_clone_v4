@@ -6,19 +6,32 @@ $(() => {
       $('header #api_status').addClass('available');
     }
   });
+  function temHtml (item) {
+    return (
+           `<article>
+            <div class="title_box">
+              <h2>${item.name}</h2>
+              <div class="price_by_night">${item.price_by_night}</div>
+            </div>
+            <div class="information">
+            <div class="max_guest">${item.max_guest} Guests </div>
+              <div class="number_rooms">${item.number_rooms} Bedrooms</div>
+              <div class="number_bathrooms">${item.number_bathrooms} Bathrooms</div>
+            </div>
+            <div class="description">${item.description}</div>
+            </article>`
+    );
+  }
+
   $.ajax({
     url: 'http://localhost:5001/api/v1/places_search/',
-    contentType:'application/json',
+    contentType: 'application/json',
     data: '{}',
     type: 'POST',
     success: (response) => {
       response.forEach(item => {
-        $('article .title_box h2').html(item.name);
-	$('article .price_by_night').html(item.price_by_night);
-	$('article .information .max_guest').html(item.max_guest + " Guests");
-	$('article .information .number_rooms').html(item.number_rooms + " Bedrooms");
-	$('article .information .number_bathrooms').html(item.number_bathrooms + " Bathrooms");
-	$('article .description').html(item.description);
+        const htmlVar = temHtml(item);
+        $(htmlVar).appendTo('.places');
       });
     }
   });
@@ -26,13 +39,11 @@ $(() => {
   $('li input:checkbox').css({ 'margin-right': '10px' });
   $('li input:checkbox').change(function () {
     if ($(this).prop('checked')) {
-      // $('li input:checkbox').css('background-color','#33A8FF');
       dirAmeny[$(this).attr('data-id')] = $(this).attr('data-name');
       let allValues = Object.values(dirAmeny);
       allValues = allValues.join(', ');
       $('.amenities h4 p').html(allValues);
     } else {
-      // $('li input:checkbox').css('background-color', '#FDFEFE');
       const idAmenyRemov = $(this).attr('data-id');
       delete dirAmeny[idAmenyRemov];
       let updateValues = Object.values(dirAmeny);
